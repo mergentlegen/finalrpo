@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- insert ADMIN user -->
+
+    <changeSet id="insert-admin-user" author="mergen">
+        <insert tableName="users">
+            <column name="email" value="admin@gmail.com"/>
+            <!-- password = admin123 -->
+            <column name="password" value="$2a$10$jzBQXBo/91uJxBsx3druRuPvmnYM8XtS6wqT./0ybkpp0K.kPOh4i"/>
+            <column name="full_name" value="Admin User"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
