@@ -1,0 +1,30 @@
+services:
+  finalrpo-backend:
+    build: .
+    container_name: finalrpo-backend
+    depends_on:
+      - finalrpo-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://finalrpo-db:5432/final_bd
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_LIQUIBASE_ENABLED=true
+    ports:
+      - "8081:8081"
+
+  finalrpo-db:
+    image: postgres:17
+    container_name: finalrpo-db
+    environment:
+      - POSTGRES_DB=final_bd
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - finalrpo_data:/var/lib/postgresql/data
+
+volumes:
+  finalrpo_data:
