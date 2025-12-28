@@ -44,7 +44,7 @@ class ReviewServiceTest {
     private ReviewMapper reviewMapper;
 
     @Mock
-    private UserService userService; // есть в сервисе, но не используется в методах — просто чтобы DI было
+    private UserService userService;
 
     @InjectMocks
     private ReviewService reviewService;

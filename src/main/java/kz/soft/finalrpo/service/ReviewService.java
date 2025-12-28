@@ -32,27 +32,25 @@ public class ReviewService {
 
     public ReviewResponse create(CustomUserDetails currentUser, ReviewCreateRequest request) {
 
-        // ✅ Получаем курс
+        // Получаем курс
         Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new EntityNotFoundException("Course not found: " + request.getCourseId()));
 
-        // ✅ Получаем автора
+        // Получаем автора
         User author = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + currentUser.getId()));
 
-        // ✅ ШАГ 6.1: отзыв может оставить только записанный студент
         boolean enrolled = enrollmentRepository.existsByStudentIdAndCourseId(author.getId(), course.getId());
         if (!enrolled) {
             throw new IllegalArgumentException("You must be enrolled in the course to leave a review");
         }
 
-        // ✅ ШАГ 6.2: один отзыв на курс от одного пользователя
         boolean alreadyReviewed = reviewRepository.existsByAuthorIdAndCourseId(author.getId(), course.getId());
         if (alreadyReviewed) {
             throw new IllegalArgumentException("You already left a review for this course");
         }
 
-        // ✅ Создаём отзыв
+        // Создаём отзыв
         Review review = Review.builder()
                 .course(course)
                 .author(author)
